@@ -34,7 +34,14 @@ class preparedStatements {
       .query("INSERT INTO employee SET ?", employee);
   }
 
-  // updateEmployeeRole()
+  updateEmployeeRole(updatedEmp) {
+    return this.connection
+      .promise()
+      .query("UPDATE employee SET role_id = ? WHERE id = ?", [
+        updatedEmp.role_id,
+        updatedEmp.employee_id,
+      ]);
+  }
 
   // departmentNames() {
 
@@ -47,8 +54,5 @@ class preparedStatements {
   //   return departmentList;
   // }
 }
-// Bonus
-
-// viewBudget()
 
 module.exports = new preparedStatements(connection);

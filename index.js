@@ -3,7 +3,6 @@ const mysql2 = require("mysql2");
 const promptList = require("./prompts");
 const constT = require("console.table");
 const prepStat = require("./db/preparedStatements");
-// const { addRole } = require("./db/preparedStatements");
 
 const functionArray = [
   function viewAllDepartments() {
@@ -33,42 +32,50 @@ const functionArray = [
       .then(() => mainMenu());
   },
 
-  function addDepartment() {},
-
-  async function addNewRole() {
-    //console.log(choiceList);
-    inquirer
-      .prompt([
-        {
-          name: "title",
-          message: "What is the name of the role you would like to add?",
-        },
-        {
-          name: "salary",
-          message: "What is the salary of this role?",
-        },
-        {
-          name: "department_id",
-          message: "Which department is the role a part of?",
-        },
-      ])
-      .then((role) => {
-        prepStat
-          .addRole(role)
-          .then(() =>
-            console.log(`${role.title} has been added to the database`)
-          )
-          .then(() => mainMenu());
-      });
+  function addDepartment() {
+    inquirer.prompt(promptList[1]).then((department) => {
+      prepStat
+        .addDepartment(department)
+        .then(() =>
+          console.log(`${department.name} has been added to the database`)
+        )
+        .then(() => mainMenu());
+    });
   },
 
-  function addEmployee() {},
+  function addNewRole() {
+    //console.log(choiceList);
+    inquirer.prompt(promptList[2]).then((role) => {
+      prepStat
+        .addRole(role)
+        .then(() => console.log(`${role.title} has been added to the database`))
+        .then(() => mainMenu());
+    });
+  },
 
-  function updateEmployee() {},
+  function addEmployee() {
+    inquirer.prompt(promptList[3]).then((employee) => {
+      prepStat
+        .addEmployee(employee)
+        .then(() =>
+          console.log(`${employee.first_name} has been added to the database`)
+        )
+        .then(() => mainMenu());
+    });
+  },
+
+  function updateEmployee() {
+    inquirer.prompt(promptList[4]).then((updatedEmployee) => {
+      prepStat
+        .updateEmployeeRole(updatedEmployee)
+        .then(() => console.log("Employee role updated."))
+        .then(() => mainMenu());
+    });
+  },
 ];
 
 function mainMenu() {
-  inquirer.prompt(promptList).then((res) => {
+  inquirer.prompt(promptList[0]).then((res) => {
     let choice = res.choice;
     for (let i = 0; i < functionArray.length; i++) {
       if (choice === i) {
@@ -80,5 +87,3 @@ function mainMenu() {
 }
 
 mainMenu();
-// const test = prepStat.departmentNames();
-// console.log(test);

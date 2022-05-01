@@ -81,4 +81,22 @@ const addEmployeePrompt = [
   },
 ];
 
-module.exports = mainPrompt;
+const updateEmployeeRole = [
+  {
+    name: "employee_id",
+    message: "what is the employee id of the employee you wish to update?",
+  },
+  {
+    name: "role_id",
+    message: "What is the new role id you would like to assign this employee?",
+  },
+];
+
+const prompts = [
+  mainPrompt,
+  addDepartmentPrompt,
+  addRolePrompt,
+  addEmployeePrompt,
+  updateEmployeeRole,
+];
+module.exports = prompts;
