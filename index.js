@@ -72,6 +72,11 @@ const functionArray = [
         .then(() => mainMenu());
     });
   },
+
+  function Quit() {
+    console.log("Have a nice day.");
+    process.exit();
+  },
 ];
 
 function mainMenu() {
@@ -79,7 +84,6 @@ function mainMenu() {
     let choice = res.choice;
     for (let i = 0; i < functionArray.length; i++) {
       if (choice === i) {
-        console.log(functionArray[i]);
         functionArray[i]();
       }
     }
